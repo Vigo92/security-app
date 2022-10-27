@@ -61,19 +61,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionFixation()
+                .migrateSession()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
-
         DaoAuthenticationProvider daoAuthenticationProvider =
                 new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(bcryptPasswordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-
         return daoAuthenticationProvider;
     }
 }

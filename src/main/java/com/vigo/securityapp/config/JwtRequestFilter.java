@@ -1,10 +1,9 @@
 package com.vigo.securityapp.config;
 
-import com.vigo.securityapp.exception.JWTAuthenticationExcetion;
+import com.vigo.securityapp.exception.JWTAuthenticationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
           userName = jwtTokenUtility.getUsernameFromToken(token);
         }
         else{
-            throw new JWTAuthenticationExcetion("JWT Token does not begin with Bearer String");
+            throw new JWTAuthenticationException("JWT Token does not begin with Bearer String");
         }
         if(Objects.nonNull(userName) && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userName);

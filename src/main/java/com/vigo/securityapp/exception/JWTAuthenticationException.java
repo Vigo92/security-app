@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class JWTAuthenticationExcetion extends RuntimeException {
+public class JWTAuthenticationException extends RuntimeException {
 
     private String message;
 }
